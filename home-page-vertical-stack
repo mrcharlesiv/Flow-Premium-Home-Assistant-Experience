@@ -1,0 +1,2208 @@
+type: vertical-stack
+cards:
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Climate
+            secondary: ''
+            icon: fapro:circle-sort-solid
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/climate
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 30px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 35px;
+                    --card-primary-font-weight: 700;
+                    overflow: visible;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 18px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 20px;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: weather.forecast_home
+                tap_action:
+                  action: more-info
+                icon: fas:cloud-sun
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 5px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mod-card
+            style: |
+              ha-card {
+                white-space: nowrap;
+                scrollbar-width: none; /* For Firefox */
+                -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+              }
+              ha-card::-webkit-scrollbar { /* For Chrome, Safari, and Opera */
+                display: none;
+              }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:mod-card
+                  style: |
+                    ha-card {
+                      margin-left: 0px;
+                      margin-right: 0px;
+                    }
+                  card:
+                    type: custom:button-card
+                    entity: climate.basement
+                    name: Basement
+                    icon: |
+                      [[[ 
+                        if (entity.attributes.hvac_action === 'cooling') return 'fapro:temperature-arrow-down-solid'; 
+                        if (entity.attributes.hvac_action === 'heating') return 'fapro:temperature-arrow-up-solid'; 
+                        return 'fapro:fan-solid'; 
+                      ]]]
+                    show_state: false
+                    show_icon: true
+                    show_label: true
+                    label: |
+                      [[[ 
+                        return states['sensor.basement_living_temperature'].state + "°"; 
+                      ]]]
+                    layout: icon_state_name2nd
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/climate-basement/
+                    hold_action:
+                      action: toggle
+                    styles:
+                      card:
+                        - padding: 0px
+                        - height: 60px
+                        - width: null
+                        - border-radius: 10px
+                        - background-color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'rgba(255, 255, 255,.8)'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'rgba(255, 255, 255,.8)'; 
+                              return ''; 
+                            ]]]
+                      name:
+                        - justify-self: left
+                        - padding-bottom: 0px
+                        - font-weight: 600
+                        - font-size: 14px
+                        - top-margin: null
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      label:
+                        - font-size: 14px
+                        - font-weight: 400
+                        - padding-bottom: 30px
+                        - justify-self: left
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      state:
+                        - justify-self: center
+                        - font-size: 28px
+                        - font-weight: 600
+                        - padding-bottom: 10px
+                      icon:
+                        - width: 30px
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return '#0A84FF'; 
+                              if (entity.attributes.hvac_action === 'heating') return '#D70015'; 
+                              return 'white'; 
+                            ]]]
+                    state:
+                      - value: 'off'
+                        styles:
+                          card: null
+                          icon: null
+                      - value: idle
+                        styles:
+                          card: null
+                          icon: null
+                      - value: cooling
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+                      - value: heating
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+          - type: custom:mod-card
+            style: |
+              ha-card {
+                white-space: nowrap;
+                scrollbar-width: none; /* For Firefox */
+                -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+              }
+              ha-card::-webkit-scrollbar { /* For Chrome, Safari, and Opera */
+                display: none;
+              }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:mod-card
+                  style: |
+                    ha-card {
+                      margin-left: 0px;
+                      margin-right: 0px;
+                    }
+                  card:
+                    type: custom:button-card
+                    entity: climate.main_floor
+                    name: Main Floor
+                    icon: |
+                      [[[ 
+                        if (entity.attributes.hvac_action === 'cooling') return 'fapro:temperature-arrow-down-solid'; 
+                        if (entity.attributes.hvac_action === 'heating') return 'fapro:temperature-arrow-up-solid'; 
+                        return 'fapro:fan-solid'; 
+                      ]]]
+                    show_state: false
+                    show_icon: true
+                    show_label: true
+                    label: |
+                      [[[ 
+                        return states['sensor.living_room_temperature'].state + "°"; 
+                      ]]]
+                    layout: icon_state_name2nd
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/climate-main-floor/
+                    hold_action:
+                      action: toggle
+                    styles:
+                      card:
+                        - padding: 0px
+                        - height: 60px
+                        - width: null
+                        - border-radius: 10px
+                        - background-color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'rgba(255, 255, 255,.8)'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'rgba(255, 255, 255,.8)'; 
+                              return ''; 
+                            ]]]
+                      name:
+                        - justify-self: left
+                        - padding-bottom: 0px
+                        - font-weight: 600
+                        - font-size: 14px
+                        - top-margin: null
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      label:
+                        - font-size: 14px
+                        - font-weight: 400
+                        - padding-bottom: 30px
+                        - justify-self: left
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      state:
+                        - justify-self: center
+                        - font-size: 28px
+                        - font-weight: 600
+                        - padding-bottom: 10px
+                      icon:
+                        - width: 30px
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return '#0A84FF'; 
+                              if (entity.attributes.hvac_action === 'heating') return '#D70015'; 
+                              return 'white'; 
+                            ]]]
+                    state:
+                      - value: 'off'
+                        styles:
+                          card: null
+                          icon: null
+                      - value: idle
+                        styles:
+                          card: null
+                          icon: null
+                      - value: cooling
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+                      - value: heating
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:mod-card
+            style: |
+              ha-card {
+                white-space: nowrap;
+                scrollbar-width: none; /* For Firefox */
+                -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+              }
+              ha-card::-webkit-scrollbar { /* For Chrome, Safari, and Opera */
+                display: none;
+              }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:mod-card
+                  style: |
+                    ha-card {
+                      margin-left: 0px;
+                      margin-right: 0px;
+                    }
+                  card:
+                    type: custom:button-card
+                    entity: climate.upstairs
+                    name: Upstairs
+                    icon: |
+                      [[[ 
+                        if (entity.attributes.hvac_action === 'cooling') return 'fapro:temperature-arrow-down-solid'; 
+                        if (entity.attributes.hvac_action === 'heating') return 'fapro:temperature-arrow-up-solid'; 
+                        return 'fapro:fan-solid'; 
+                      ]]]
+                    show_state: false
+                    show_icon: true
+                    show_label: true
+                    label: |
+                      [[[ 
+                        return states['sensor.madeline_bedroom_ecobee_sensor_temperature'].state + "°"; 
+                      ]]]
+                    layout: icon_state_name2nd
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/climate-upstairs/
+                    hold_action:
+                      action: toggle
+                    styles:
+                      card:
+                        - padding: 0px
+                        - height: 60px
+                        - width: null
+                        - border-radius: 10px
+                        - background-color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'rgba(255, 255, 255,.8)'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'rgba(255, 255, 255,.8)'; 
+                              return ''; 
+                            ]]]
+                      name:
+                        - justify-self: left
+                        - padding-bottom: 0px
+                        - font-weight: 600
+                        - font-size: 14px
+                        - top-margin: null
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      label:
+                        - font-size: 14px
+                        - font-weight: 400
+                        - padding-bottom: 30px
+                        - justify-self: left
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return 'black'; 
+                              if (entity.attributes.hvac_action === 'heating') return 'black'; 
+                              return 'white'; 
+                            ]]]
+                      state:
+                        - justify-self: center
+                        - font-size: 28px
+                        - font-weight: 600
+                        - padding-bottom: 10px
+                      icon:
+                        - width: 30px
+                        - color: |
+                            [[[ 
+                              if (entity.attributes.hvac_action === 'cooling') return '#0A84FF'; 
+                              if (entity.attributes.hvac_action === 'heating') return '#D70015'; 
+                              return 'white'; 
+                            ]]]
+                    state:
+                      - value: 'off'
+                        styles:
+                          card: null
+                          icon: null
+                      - value: idle
+                        styles:
+                          card: null
+                          icon: null
+                      - value: cooling
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+                      - value: heating
+                        styles:
+                          card:
+                            - background-color: rgba(255, 255, 255, 0.8)
+                          name:
+                            - color: black
+                          state:
+                            - color: black
+                          label:
+                            - color: black
+          - type: custom:gap-card
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Living Room
+            secondary: ''
+            icon: fapro:couch-solid
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/living-room
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 30px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 35px;
+                    --card-primary-font-weight: 800;
+                    overflow: visible;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 18px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 20px;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.living_room_light_count
+                tap_action:
+                  action: more-info
+              - type: entity
+                entity: sensor.living_room_temperature
+                tap_action:
+                  action: more-info
+                icon: fapro:temperature-three-quarters-solid
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 8px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.living_room_apple_tv_status
+            name: Apple TV
+            icon: phu:apple-tv
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-living-room/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: input_boolean.living_room_nintendo_status
+            name: Nintendo Switch
+            icon: null
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/nintendo-remote-living-room/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+              icon:
+                - width: 50px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.living_room_lamps
+            name: Lamps
+            icon: mdi:lamp
+            show_state: true
+            tap_action:
+              action: toggle
+            double_tap_action:
+              action: fire-dom-event
+              local_conditional_card:
+                action: toggle
+                ids:
+                  - home_livingroom_lamps
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.living_room_nook_accent_light
+            name: Bookshelf
+            icon: mdi:light-recessed
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.living_room_accent_light
+            name: Accent
+            icon: mdi:light-recessed
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.living_room_ceiling_fan_light
+            name: Ceiling Fan
+            icon: mdi:ceiling-fan-light
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: fan.living_room_ceiling_fan
+            name: Ceiling Fan
+            icon: mdi:fan
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#28B9F2'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.kitchen_lights
+            name: Kitchen
+            icon: mdi:lightbulb-group
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Master Bedroom
+            secondary: ''
+            icon: fapro:bed-front-solid
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: ''
+            fill_container: true
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 22px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 25px;
+                    overflow: visible !important;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                    width: 130%;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 18px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 18px;
+                   --card-primary-font-weight: 800;
+                   overflow: visible;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.bedroom_temperature
+                tap_action:
+                  action: more-info
+                icon: fapro:temperature-three-quarters-solid
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 5px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.master_bedroom_apple_tv_status
+            name: Apple TV
+            icon: phu:apple-tv
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-master-bedroom/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: vertical-stack
+            cards:
+              - type: custom:button-card
+                entity: light.master_bedroom_sconces
+                name: Wall Sconces
+                icon: mdi:wall-sconce
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+              - type: custom:button-card
+                entity: light.master_bedroom_ceiling_fan_light
+                name: Ceiling Fan
+                icon: mdi:ceiling-fan-light
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: fan.master_bedroom_ceiling_fan
+            name: Ceiling Fan
+            icon: mdi:fan
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#28B9F2'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.master_bathroom_lights
+            name: Bathroom
+            icon: mdi:bathtub
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Theater
+            secondary: ''
+            icon: mdi:theater
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: ''
+            fill_container: true
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 22px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 25px;
+                    overflow: visible !important;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                    width: 110%;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 20px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 18px;
+                   --card-primary-font-weight: 800;
+                   overflow: visible;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.theater_smart_sensor_temperature
+                tap_action:
+                  action: more-info
+                icon: fapro:temperature-three-quarters-solid
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 5px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.theater_apple_tv_status
+            name: Apple TV
+            icon: phu:apple-tv
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-theater/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: input_boolean.theater_playstation_5_status
+            name: Playstation 5
+            icon: null
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/nintendo-remote-living-room/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+              icon:
+                - width: 70px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.theater_nintendo_switch_status
+            name: Nintendo Switch
+            icon: null
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-master-bedroom/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+              icon:
+                - width: 50px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: vertical-stack
+            cards:
+              - type: custom:button-card
+                entity: light.theater_rear_lights
+                name: Rear
+                icon: mdi:light-recessed
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+              - type: custom:button-card
+                entity: light.theater_main_lights
+                name: Main
+                icon: mdi:light-recessed
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.theater_snack_lights
+            name: Snack Area
+            icon: mdi:popcorn
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.theater_screen_lights
+            name: Front
+            icon: mdi:light-recessed
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: switch.theater_star_ceiling
+            name: Star Ceiling
+            icon: mdi:weather-night
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:button-card
+            entity: light.basement_lights_other_than_theater_room
+            name: Outside Theater
+            icon: mdi:lightbulb-group
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Gym
+            secondary: ''
+            icon: fapro:dumbbell-solid
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: ''
+            fill_container: true
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 22px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 25px;
+                    overflow: visible !important;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                    width: 110%;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 18px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 18px;
+                   --card-primary-font-weight: 800;
+                   overflow: visible;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.gym_temperature
+                tap_action:
+                  action: more-info
+                icon: fapro:temperature-three-quarters-solid
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 5px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.gym_apple_tv_status
+            name: Apple TV
+            icon: phu:apple-tv
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-master-bedroom/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: vertical-stack
+            cards:
+              - type: custom:button-card
+                entity: light.gym_all_recessed_lights_light_group_helper
+                name: Recessed
+                icon: mdi:light-recessed
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+              - type: custom:button-card
+                entity: light.gym_flush_mount_light_group
+                name: Flush Mount
+                icon: mdi:ceiling-light
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.gym_accent_lights_govee_mqtt
+            name: Accent Lights
+            icon: mdi:white-balance-iridescent
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:gap-card
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Guest Bedroom
+            secondary: ''
+            icon: fapro:bed-front-solid
+            badge_icon: ''
+            tap_action:
+              action: navigate
+              navigation_path: ''
+            fill_container: true
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: transparent;
+                    --card-primary-font-size: 22px !important;
+                    --card-secondary-font-size: 50px !important;
+                    --card-primary-line-height: 25px;
+                    overflow: visible !important;
+                    top: 10px;
+                    right: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 10px;
+                    width: 110%;
+                  }
+                  ha-state-icon {
+                    --icon-symbol-size: 18px;
+                  }
+                mushroom-shape-icon$: |
+                  .shape {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 0px;  
+                    padding-top: 0px;
+                    left: 5px;
+                    background: transparent !important;
+                  }
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-font-size: 18px;
+                   --card-primary-font-size: 18px;
+                   --card-primary-font-weight: 800;
+                   overflow: visible;
+                  }    
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.guest_bathroom_sensorpush_temperature
+                tap_action:
+                  action: more-info
+                icon: fapro:temperature-three-quarters-solid
+            alignment: end
+            card_mod:
+              style: |
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: transparent !important;
+                  }  
+                :host {
+                  width: 50px;
+                  --chip-background: rgba(0, 0, 0, 0) !important;
+                }
+                ha-card {
+                  top: 21px;
+                  right: 5px;
+                  width: ;
+                  --chip-padding: 4px;
+                  padding-top: 10px;
+
+                }
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.guest_bedroom_apple_tv_status
+            name: Apple TV
+            icon: phu:apple-tv
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/atv-remote-guest-bedroom/
+            hold_action:
+              action: toggle
+            styles:
+              card:
+                - padding: 0px
+                - height: 128px
+              grid:
+                - grid-template-areas: '"i" "n" "s"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: 1fr min-content min-content
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: center
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: center
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255, 0.8)
+                  icon:
+                    - color: '#0171A4'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: vertical-stack
+            cards:
+              - type: custom:button-card
+                entity: light.guest_bedroom_main_lights
+                name: Main
+                icon: mdi:dome-light
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+              - type: custom:button-card
+                entity: light.bonus_table_lamps
+                name: Lamps
+                icon: mdi:lamp
+                show_state: true
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                layout: icon_name_state2nd
+                styles:
+                  card:
+                    - padding: 0px
+                    - height: 60px
+                  img_cell:
+                    - align-self: center
+                    - text-align: center
+                  name:
+                    - justify-self: start
+                    - padding-left: null
+                    - font-weight: 600
+                    - font-size: 14px
+                  state:
+                    - justify-self: start
+                    - font-size: 12px
+                    - font-weight: 300
+                    - padding-bottom: 10px
+                    - padding-top: px
+                  icon:
+                    - width: 35px
+                state:
+                  - value: 'off'
+                    styles:
+                      card: null
+                      icon: null
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: rgba(255, 255, 255,.8)
+                      icon:
+                        - color: '#FF9500'
+                      name:
+                        - color: black
+                      state:
+                        - color: black
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.guest_bathroom_lights
+            name: Bathroom
+            icon: mdi:bathtub
+            show_state: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            layout: icon_name_state2nd
+            styles:
+              card:
+                - padding: 0px
+                - height: 60px
+              img_cell:
+                - align-self: center
+                - text-align: center
+              name:
+                - justify-self: start
+                - padding-left: null
+                - font-weight: 600
+                - font-size: 14px
+              state:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 300
+                - padding-bottom: 10px
+                - padding-top: px
+              icon:
+                - width: 35px
+            state:
+              - value: 'off'
+                styles:
+                  card: null
+                  icon: null
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: rgba(255, 255, 255,.8)
+                  icon:
+                    - color: '#FF9500'
+                  name:
+                    - color: black
+                  state:
+                    - color: black
+          - type: custom:gap-card
+  - type: custom:gap-card
+    height: 50
