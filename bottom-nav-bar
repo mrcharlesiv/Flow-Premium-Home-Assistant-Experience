@@ -1,0 +1,182 @@
+type: custom:mod-card
+card_mod:
+  style: |
+    /* Styles for mobile devices */
+    @media (max-width: 767px) {
+      ha-card {
+        z-index: 1;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 80px;
+        backdrop-filter: blur(120px);
+        -webkit-backdrop-filter: blur(150px);
+        background: rgba(15, 1, 31, .8);
+        opacity: 1;
+        border-radius: 0px;
+        padding: 0px;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-top: .5px solid rgba(100, 100, 100, 0.2);
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.3);  
+      }
+    }
+    /* Styles for desktop devices */
+    @media (min-width: 766px) {
+      ha-card {
+        z-index: -1;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 20%;
+        height: 75px;
+        background: RGBA(0,0,0,0.50);
+        opacity: 1;
+        border-radius: 0px;
+        padding: 5px;
+      }
+    }
+card:
+  type: grid
+  square: false
+  columns: 5
+  style:
+    z-index: 10
+  cards:
+    - type: custom:button-card
+      icon: fas:house
+      name: Home
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/home
+      styles:
+        icon:
+          - color: white
+          - width: 24px
+          - height: 24px
+        img_cell:
+          - display: flex
+          - align-items: flex-end
+          - justify-content: center
+        card:
+          - background: none
+          - padding: 0px
+          - opacity: 1
+          - top: 8px
+          - height: null
+          - width: 74px
+        name:
+          - font-size: 10px
+          - align-self: center
+          - opacity: 1
+          - font-weight: 400
+          - padding-top: 6px
+    - type: custom:button-card
+      icon: fapro:circle-sort-solid
+      name: Climate
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/climate
+      styles:
+        icon:
+          - color: white
+          - width: 24px
+          - height: 24px
+        img_cell:
+          - display: flex
+          - align-items: flex-end
+          - justify-content: center
+        card:
+          - background: none
+          - padding: 0px
+          - opacity: 0.5
+          - top: 8px
+          - height: null
+          - width: 74px
+        name:
+          - font-size: 10px
+          - align-self: center
+          - font-weight: 300
+          - padding-top: 6px
+    - type: custom:button-card
+      icon: fapro:tv-retro-solid
+      name: Media
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/Media
+      styles:
+        icon:
+          - color: white
+          - width: 24px
+          - height: 24px
+        img_cell:
+          - display: flex
+          - align-items: flex-end
+          - justify-content: center
+        card:
+          - background: none
+          - padding: 0px
+          - opacity: 0.5
+          - top: 8px
+          - height: null
+          - width: 74px
+        name:
+          - font-size: 10px
+          - align-self: center
+          - font-weight: 300
+          - padding-top: 6px
+    - type: custom:button-card
+      icon: fapro:lightbulb-on-solid
+      name: Lights
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/lights/
+      styles:
+        icon:
+          - color: white
+          - width: 24px
+          - height: 24px
+        img_cell:
+          - display: flex
+          - align-items: flex-end
+          - justify-content: center
+        card:
+          - background: none
+          - padding: 0px
+          - opacity: 0.5
+          - top: 8px
+          - height: null
+          - width: 74px
+        name:
+          - font-size: 10px
+          - align-self: center
+          - font-weight: 300
+          - padding-top: 6px
+    - type: custom:button-card
+      icon: fapro:shield-check-solid
+      name: Security
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/security/
+      styles:
+        icon:
+          - color: white
+          - width: 24px
+          - height: 24px
+        img_cell:
+          - display: flex
+          - align-items: flex-end
+          - justify-content: center
+        card:
+          - background: none
+          - padding: 0px
+          - opacity: 0.5
+          - top: 8px
+          - height: null
+          - width: 74px
+        name:
+          - font-size: 10px
+          - align-self: center
+          - font-weight: 300
+          - padding-top: 6px
