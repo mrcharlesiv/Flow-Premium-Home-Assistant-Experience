@@ -1,0 +1,97 @@
+type: custom:mod-card
+card_mod:
+  style: |
+    ha-card {
+      position: static;
+      z-index: 3;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      height: 45px;
+      padding: 4px 10px;
+      border-radius: 10px;
+      background-color: rgba(10, 10, 10, .5);
+      -webkit-backdrop-filter: blur(100px);
+    }
+card:
+  type: grid
+  square: false
+  columns: 1
+  style:
+    z-index: 10
+  cards:
+    - type: custom:mushroom-chips-card
+      chips:
+        - type: template
+          icon: >
+            {% if states('sensor.count_of_maintenance_equal_or_less_than_zero')
+            | int > 0 %}
+              fapro:circle-exclamation-solid
+            {% else %}
+              fapro:gear-solid
+            {% endif %}
+          icon_color: >
+            {% if states('sensor.count_of_maintenance_equal_or_less_than_zero')
+            | int > 0 %}
+              red
+            {% else %}
+              white
+            {% endif %}
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/system
+        - type: spacer
+        - type: entity
+          entity: sensor.total_lights_on
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/lights
+          icon_color: primary
+          icon: fapro:lightbulb-on-solid
+          card_mod:
+            style: |
+              ha-card {
+                --chip-padding: 4px;
+              }
+        - type: entity
+          entity: sensor.locked_doors_count
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/security
+          use_entity_picture: false
+          icon: fapro:lock-open-solid
+          icon_color: '#D20F44'
+          card_mod:
+            style: |
+              ha-card {
+                --chip-padding: 4px;
+              }
+        - type: entity
+          entity: sensor.media_on
+          icon_color: '#0171A4'
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/Media
+          icon: fapro:tv-retro-solid
+          card_mod:
+            style: |
+              ha-card {
+                --chip-padding: 4px;
+              }
+        - type: spacer
+        - type: action
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/scenes
+          icon: fapro:floppy-disk-solid
+      card_mod:
+        style: |
+          :host {
+            --chip-background: rgba(0, 0, 0, 0) !important; /* Change this to your desired color */
+            --mush-card-primary-font-size: 28px;
+          }
+          ha-card {
+            --card-primary-font-size: 30px !important;
+            --card-secondary-font-size: 30px;
+            --chip-icon-size: 15px;
+          }
