@@ -1,0 +1,843 @@
+type: vertical-stack
+cards:
+  - type: custom:stack-in-card
+    card_mod:
+      style: |
+        ha-card {
+          z-index: 0;
+          height: 45px;
+          padding: 4px 10px;
+          border-radius: 10px;
+          position: fixed;
+          right: 8px;
+          left: 8px;
+          top: 8px;
+        }
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: back
+          - type: spacer
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: input_boolean.living_room_apple_tv_status
+                state: 'on'
+            chip:
+              type: template
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              icon: phu:apple-tv
+              content: Living Room On
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: input_boolean.living_room_apple_tv_status
+                state: 'off'
+            chip:
+              type: template
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              icon: phu:apple-tv
+              content: Living Room Off
+          - type: spacer
+          - type: entity
+            entity: input_boolean.living_room_apple_tv_status
+            tap_action:
+              action: toggle
+            icon: mdi:power
+            content_info: none
+        card_mod:
+          style: |
+            :host {
+              --chip-background: rgba(0, 0, 0, 0) !important; /* Change this to your desired color */
+            }
+  - type: custom:mod-card
+    card_mod:
+      style: |
+        /* Styles for mobile devices */
+        @media (max-width: 767px) {
+          ha-card {
+            z-index: 2;
+            position: fixed;
+            top: 61px;
+            left: 8px;
+            right: 8px;
+            height: 45px;
+
+            background: RGBA(0, 0, 0, 0.5);
+            opacity: 1;
+            border-color: white;
+            border-width: 3px;
+            padding: 0px;
+            padding-left: 30px;
+            padding-right: 30px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+          }
+        }
+        /* Styles for desktop devices */
+        @media (min-width: 768px) {
+          ha-card {
+            z-index: -1;
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            width: 20%;
+            desktop-width: 25px;
+            height: 75px;
+
+            background: RGBA(0,0,0,0.50);
+            opacity: 1;
+            border-radius: 5px;
+            padding-left: 25%;
+
+            /* Center the card horizontally */
+            margin-left: auto;
+            margin-right: auto;        
+          }
+        }
+        @media (min-width:100%) {
+          ha-card {
+            width:100%;
+            left:100%;
+          }
+        }
+    card:
+      type: grid
+      square: false
+      columns: 5
+      style:
+        z-index: 30
+      cards:
+        - type: custom:button-card
+          icon: phu:apple-tv
+          tap_action:
+            action: call-service
+            service: media_player.select_source
+            target:
+              entity_id: media_player.living_room_2
+            data:
+              source: TV
+          styles:
+            icon:
+              - width: 25px
+              - color: rgba(255,255,255,0.8)
+            img_cell:
+              - width: 40px
+              - height: 40px
+              - top: 10px
+            card:
+              - background: none
+              - padding: 0
+        - type: custom:button-card
+          icon: mdi:netflix
+          tap_action:
+            action: call-service
+            service: media_player.select_source
+            target:
+              entity_id: media_player.living_room_2
+            data:
+              source: netflix
+          styles:
+            icon:
+              - width: 25px
+              - color: rgba(255,255,255,0.8)
+            img_cell:
+              - width: 40px
+              - height: 40px
+              - top: 10px
+            card:
+              - background: none
+              - padding: 0
+        - type: custom:button-card
+          icon: phu:disney-plus
+          tap_action:
+            action: call-service
+            service: media_player.select_source
+            target:
+              entity_id: media_player.living_room_2
+            data:
+              source: disney+
+          styles:
+            icon:
+              - width: 25px
+              - color: rgba(255,255,255,0.8)
+            img_cell:
+              - width: 40px
+              - height: 40px
+              - top: 10px
+            card:
+              - background: none
+              - padding: 0
+        - type: custom:button-card
+          icon: si:prime
+          tap_action:
+            action: call-service
+            service: media_player.select_source
+            target:
+              entity_id: media_player.living_room_2
+            data:
+              source: prime
+          styles:
+            icon:
+              - width: 25px
+              - color: rgba(255,255,255,0.8)
+            img_cell:
+              - width: 40px
+              - height: 40px
+              - top: 10px
+            card:
+              - background: none
+              - padding: 0
+        - type: custom:button-card
+          icon: si:hbo
+          tap_action:
+            action: call-service
+            service: media_player.select_source
+            target:
+              entity_id: media_player.living_room_2
+            data:
+              source: max
+          styles:
+            icon:
+              - width: 25px
+              - color: rgba(255,255,255,0.8)
+            img_cell:
+              - width: 40px
+              - height: 40px
+              - top: 10px
+            card:
+              - background: none
+              - padding: 0
+  - type: custom:android-tv-card
+    remote_id: remote.living_room
+    media_player_id: media_player.living_room_2
+    autofill_entity_id: true
+    rows:
+      - - touchpad
+    custom_actions:
+      - type: button
+        name: power
+        tap_action:
+          action: key
+          key: wakeup
+        icon: mdi:power
+        hold_action:
+          action: key
+          key: suspend
+      - type: button
+        name: menu
+        tap_action:
+          action: key
+          key: menu
+        icon: mdi:backspace
+      - type: button
+        name: home
+        tap_action:
+          action: key
+          key: home
+        icon: mdi:home
+        hold_action:
+          action: more-info
+      - icon: mdi:rewind-10
+        tap_action:
+          action: key
+          key: skip_backward
+        name: skip-backward
+        type: button
+      - icon: mdi:fast-forward-10
+        action: key
+        name: skip-forward
+        tap_action:
+          key: skip_forward
+          action: key
+        type: button
+      - type: button
+        name: play
+        tap_action:
+          action: key
+          key: play
+        icon: mdi:play
+      - type: button
+        name: pause
+        tap_action:
+          action: key
+          key: pause
+        icon: mdi:pause
+      - type: button
+        name: up
+        tap_action:
+          action: key
+          key: up
+        hold_action:
+          action: repeat
+        icon: mdi:chevron-up
+      - type: button
+        name: down
+        tap_action:
+          action: key
+          key: down
+        hold_action:
+          action: repeat
+        icon: mdi:chevron-down
+      - type: button
+        name: left
+        tap_action:
+          action: key
+          key: left
+        hold_action:
+          action: repeat
+        icon: mdi:chevron-left
+      - type: button
+        name: right
+        tap_action:
+          action: key
+          key: right
+        hold_action:
+          action: repeat
+        icon: mdi:chevron-right
+      - type: button
+        name: center
+        tap_action:
+          action: key
+          key: select
+        icon: mdi:checkbox-blank-circle
+        double_tap_action:
+          action: key
+          key: menu
+      - type: button
+        name: primevideo
+        tap_action:
+          action: perform-action
+          data:
+            source: Prime Video
+          perform_action: media_player.select_source
+        icon: primevideo
+      - type: button
+        name: netflix
+        tap_action:
+          action: perform-action
+          data:
+            source: Netflix
+          perform_action: media_player.select_source
+        icon: mdi:netflix
+      - type: button
+        name: spotify
+        tap_action:
+          action: perform-action
+          data:
+            source: Spotify
+          perform_action: media_player.select_source
+        icon: mdi:spotify
+      - type: button
+        name: disney
+        tap_action:
+          action: perform-action
+          data:
+            source: Disney+
+          perform_action: media_player.select_source
+        icon: disney
+      - type: button
+        name: youtube
+        tap_action:
+          action: perform-action
+          data:
+            source: YouTube
+          perform_action: media_player.select_source
+        icon: mdi:youtube
+      - type: button
+        name: appletv
+        tap_action:
+          action: perform-action
+          data:
+            source: TV
+          perform_action: media_player.select_source
+        icon: appletv
+      - type: button
+        name: max
+        tap_action:
+          action: perform-action
+          data:
+            source: HBO Max
+          perform_action: media_player.select_source
+        icon: max
+      - type: button
+        name: skyshowtime
+        tap_action:
+          action: perform-action
+          data:
+            source: SkyShowtime
+          perform_action: media_player.select_source
+        icon: showtime
+      - type: button
+        name: plex
+        tap_action:
+          action: perform-action
+          data:
+            source: Plex
+          perform_action: media_player.select_source
+        icon: mdi:plex
+      - type: button
+        name: discovery
+        tap_action:
+          action: perform-action
+          data:
+            source: discovery+
+          perform_action: media_player.select_source
+        icon: discovery
+      - type: button
+        name: viaplay
+        tap_action:
+          action: perform-action
+          data:
+            source: Viaplay
+          perform_action: media_player.select_source
+        icon: viaplay
+      - type: button
+        name: tv2play
+        tap_action:
+          action: perform-action
+          data:
+            source: TV 2 Play
+          perform_action: media_player.select_source
+        icon: tv2play
+      - type: button
+        name: nrktv
+        tap_action:
+          action: perform-action
+          data:
+            source: NRK TV
+          perform_action: media_player.select_source
+        icon: nrktv
+      - type: button
+        name: allente
+        tap_action:
+          action: perform-action
+          data:
+            source: Allente
+          perform_action: media_player.select_source
+        icon: allente
+      - type: touchpad
+        name: touchpad
+        tap_action:
+          action: key
+          key: select
+        up:
+          tap_action:
+            action: key
+            key: up
+          hold_action:
+            action: repeat
+          name: up
+          type: button
+        down:
+          tap_action:
+            action: key
+            key: down
+          hold_action:
+            action: repeat
+          name: down
+          type: button
+        left:
+          tap_action:
+            action: key
+            key: left
+          hold_action:
+            action: repeat
+          name: left
+          type: button
+        right:
+          tap_action:
+            action: key
+            key: right
+          hold_action:
+            action: repeat
+          name: right
+          type: button
+        styles: |-
+          toucharea {
+            height: 410px;
+            background-image: url('https://i.ibb.co/pbf8yC8/swipe-nav.png');
+            background-color: RGBA(0,0,0,0);
+            background-size: 55%;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 0px 0px 0px 0px;
+            opacity: 1;
+            padding-top: 0px;
+            padding-bottom: 20px;
+            position: null;
+            padding-left: 0px;
+            padding-right: 0px;
+            width: auto;
+          }
+        double_tap_action:
+          action: key
+          key: menu
+    platform: Apple TV
+    keyboard_id: media_player.living_room_3
+    card_mod:
+      style: |
+        @media (max-width: 767px) {
+        ha-card {
+          z-index: 1 !important;
+          position: fixed !important; /* Change to fixed or absolute as needed */
+          background: RGBA(0, 0, 0, 0.5);
+          left: 8px;
+          right: 8px;
+          top: 106px !important;
+          bottom: 273px;
+          padding-top: 0px;
+          padding-bottom: 0px !important; 
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+          padding-top: 0px !important;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          }
+        }
+  - type: custom:button-card
+    show_icon: false
+    show_name: false
+    show_state: false
+    styles:
+      grid:
+        - grid-template-areas: '"content"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: max-content
+      card:
+        - background-color: rgba(0,0,0,0.5)
+        - webkit-backdrop-filter: blur(10px); !important;}
+        - box-shadow: none
+        - border-radius: 0px 0px 10px 10px
+        - border-width: 0px
+        - padding: 15px
+        - margin: 0px
+        - height: 185px
+    custom_fields:
+      content:
+        card:
+          type: vertical-stack
+          cards:
+            - type: custom:my-slider-v2
+              entity: media_player.living_room_2
+              mode: seekbar
+              min: 0
+              max: 100
+              styles:
+                card:
+                  - height: 20px
+                  - box-shadow: none
+                  - margin: 20px 0 0 0
+                  - background: none
+                container:
+                  - border-radius: 10px
+                  - background: none
+                  - padding: 0 0 0 5px
+                track:
+                  - background: rgba(255,255,255,0.3)
+                  - border-radius: 99px
+                  - padding: 0 0px 0 0px
+                  - width: 97%
+                  - height: 7px
+                  - margin: 0px 0 0 0
+                progress:
+                  - background: rgba(255,255,255,0.9)
+                  - border-radius: 25px 0px 0px 25px
+                  - height: 7px
+                  - margin: 0 0 0 0
+                thumb:
+                  - background: rgba(255,255,255,0.9)
+                  - width: 5px
+                  - height: 7px
+                  - border-radius: 0px
+            - type: custom:button-card
+              entity: media_player.gym
+              show_entity_picture: false
+              show_name: false
+              show_icon: false
+              custom_fields:
+                buttons:
+                  card:
+                    type: custom:button-card
+                    custom_fields:
+                      previous:
+                        card:
+                          type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: remote.send_command
+                            target:
+                              entity_id: remote.living_room
+                            data:
+                              command: menu
+                          icon: mdi:backspace
+                          show_name: false
+                          styles:
+                            card:
+                              - border-radius: 5px
+                              - border-width: 0px
+                              - box-shadow: none
+                              - background: rgba(255,255,255,0.0)
+                              - align-self: end
+                              - align-content: end
+                              - padding: 0px
+                              - margin: 0px
+                            icon:
+                              - width: 40px
+                              - color: rgba(255,255,255,0.8)
+                      play:
+                        card:
+                          type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: media_player.media_play_pause
+                            target:
+                              entity_id: media_player.living_room_2
+                          hold_action:
+                            action: call-service
+                            service: media_player.turn_off
+                            target:
+                              entity_id:
+                                - media_player.living_room_2
+                          entity: media_player.living_room_2
+                          icon: mdi:play
+                          state:
+                            - value: playing
+                              icon: mdi:pause
+                          show_name: false
+                          styles:
+                            card:
+                              - border-radius: 5px
+                              - border-width: 0px
+                              - box-shadow: none
+                              - background: rgba(255,255,255,0.0)
+                              - align-self: end
+                              - align-content: end
+                              - padding: 0px
+                              - margin-bottom: 0px
+                            icon:
+                              - width: 55px
+                              - color: rgba(255,255,255,0.8)
+                      next:
+                        card:
+                          type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: remote.send_command
+                            target:
+                              entity_id: remote.living_room
+                            data:
+                              command: home
+                          icon: mdi:home
+                          show_name: false
+                          styles:
+                            card:
+                              - border-radius: 5px
+                              - border-width: 0px
+                              - box-shadow: none
+                              - background: rgba(255,255,255,0.0)
+                              - align-self: end
+                              - align-content: end
+                            icon:
+                              - width: 40px
+                              - color: rgba(255,255,255,0.8)
+                      star:
+                        card:
+                          type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: remote.send_command
+                            target:
+                              entity_id: remote.living_room
+                            data:
+                              command: left
+                          icon: mdi:rewind-10
+                          show_name: false
+                          styles:
+                            card:
+                              - border-radius: 5px
+                              - border-width: 0px
+                              - box-shadow: none
+                              - background: rgba(255,255,255,0.0)
+                              - align-self: end
+                              - align-content: end
+                            icon:
+                              - width: 20px
+                              - color: rgba(255,255,255,0.5)
+                      menu:
+                        card:
+                          type: custom:button-card
+                          entity: media_player.living_room_2
+                          tap_action:
+                            action: call-service
+                            service: remote.send_command
+                            target:
+                              entity_id: remote.living_room
+                            data:
+                              command: right
+                          icon: mdi:fast-forward-10
+                          show_name: false
+                          styles:
+                            card:
+                              - border-radius: 5px
+                              - border-width: 0px
+                              - box-shadow: none
+                              - background: rgba(255,255,255,0.0)
+                              - align-self: end
+                              - align-content: end
+                            icon:
+                              - width: 20px
+                              - color: rgba(255,255,255,0.5)
+                    styles:
+                      grid:
+                        - grid-template-columns: 2fr 3fr 3fr 3fr 2fr
+                        - grid-template-rows: min-content
+                        - grid-template-areas: '"star previous play next menu"'
+                      card:
+                        - padding: 0 0 0 0px
+                        - margin: 3px 0px -6px 0px
+                        - align-self: end
+                        - background: none
+                        - box-shadow: none
+                        - border-width: 0px
+                        - border-radius: 0px
+              styles:
+                grid:
+                  - grid-template-areas: '"buttons"'
+                  - grid-template-columns: 1fr
+                  - grid-template-rows: max-content max-content max-content max-content;
+                  - align-items: end
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - border-radius: 0px
+                  - border-width: 0px
+                  - padding: 0px 0px 15px 0px
+                  - margin: 0px 0px 0px 0px
+            - type: custom:button-card
+              entity: media_player.rx_a1070_main
+              show_entity_picture: false
+              show_name: false
+              show_icon: false
+              custom_fields:
+                volume_control:
+                  card:
+                    type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        tap_action:
+                          action: call-service
+                          service: media_player.volume_down
+                          target:
+                            entity_id:
+                              - media_player.rx_a1070_main
+                        icon: mdi:volume-medium
+                        show_name: false
+                        styles:
+                          card:
+                            - border-radius: 25px
+                            - width: 30px
+                            - border-width: 0px
+                            - box-shadow: none
+                            - background: rgba(255,255,255,0.0)
+                            - align-self: end
+                            - align-content: end
+                          icon:
+                            - width: 20px
+                            - color: rgba(255,255,255,0.5)
+                      - type: custom:my-slider-v2
+                        entity: media_player.rx_a1070_main
+                        attribute: volume_level
+                        min: 0
+                        max: 100
+                        step: 2
+                        styles:
+                          card:
+                            - box-shadow: none
+                            - margin: 9px 0 0 0
+                            - background: none
+                          container:
+                            - border-radius: 0px
+                            - background: none
+                            - padding: 0 0 0 0px
+                          track:
+                            - background: rgba(255,255,255,0.3)
+                            - border-radius: 99px
+                            - width: 100%
+                            - height: 7px
+                            - margin: 0px 0 0 0
+                          progress:
+                            - background: rgba(255,255,255,0.9)
+                            - border-radius: 25px 0px 0px 25px
+                            - height: 7px
+                          thumb:
+                            - background: rgba(255,255,255,0.9)
+                            - width: 5px
+                            - height: 7px
+                            - border-radius: 0px
+                      - type: custom:button-card
+                        tap_action:
+                          action: call-service
+                          service: media_player.volume_up
+                          target:
+                            entity_id:
+                              - media_player.rx_a1070_main
+                        icon: mdi:volume-high
+                        show_name: false
+                        styles:
+                          card:
+                            - border-radius: 5px
+                            - width: 30px
+                            - border-width: 0px
+                            - box-shadow: none
+                            - background: rgba(255,255,255,0.0)
+                            - align-self: end
+                            - align-content: end
+                          icon:
+                            - width: 20px
+                            - color: rgba(255,255,255,0.5)
+              styles:
+                grid:
+                  - grid-template-areas: '"volume_control"'
+                  - grid-template-columns: 1fr
+                  - grid-template-rows: max-content;
+                  - align-items: end
+                card:
+                  - background: none
+                  - box-shadow: none
+                  - border-radius: 0px
+                  - border-width: 0px
+                  - padding: 0px 0px 0px 0px
+                  - margin-bottom: '-5px'
+    card_mod:
+      style: |
+        @media (max-width: 767px) {
+        :host {
+          position: fixed !important;
+          bottom: 88px;
+          left: 8px;
+          right: 8px;
+         }
+        ha-card {
+          background-color: rgba(0, 0, 0, 0.3); !important;
+          -webkit-backdrop-filter: blur(10px); !important;}
+          border-top-left-radius: 25px !important;
+          border-top-right-radius: 25px;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          }
+        }
